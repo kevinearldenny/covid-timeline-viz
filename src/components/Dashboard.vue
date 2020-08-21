@@ -144,11 +144,12 @@
       this.margin = { top: 50, right: 50, bottom: 0, left: 75 };
       this.width = 1100 - this.margin.left - this.margin.right;
     } else {
-      this.margin = { top: 50, right: 25, bottom: 0, left: 80 };
+      this.margin = { top: 50, right: 25, bottom: 0, left: 100 };
       this.width = 600 - this.margin.left - this.margin.right
     }
     this.height = 250 - this.margin.top - this.margin.bottom;
     // var timeFormat = d3.timeFormat("%Y-%m-%d");
+
     this.todayData = this.covidData.filter((d) => d.date === me.currentDay);
 
     this.svg = d3
