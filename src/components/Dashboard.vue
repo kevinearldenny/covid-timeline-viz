@@ -2,7 +2,7 @@
   <div id="app">
     <div class="title" v-if="formattedDate">
       <span>COVID-19 analysis, {{ formattedDate.start }} to {{ formattedDate.end }}</span>
-      <span><button id="play-button">Play</button></span>
+      <span><button id="play-button" v-on:click="playButton">{{ buttonText }}</button></span>
     </div>
     <div id="vis">
       <div class="mini-title">
@@ -41,7 +41,8 @@
       currentDay: null,
       x: null,
       startDate: null,
-      endDate: null
+      endDate: null,
+      buttonText: 'Play'
     }
   },
   computed: {
@@ -166,7 +167,6 @@
       this.moving = false;
       this.targetValue = this.width;
 
-      this.playButton = d3.select("#play-button");
       this.timer;
 
       this.x = d3
@@ -232,20 +232,20 @@
           .text(me.formatDate(me.startDate))
           .attr("transform", "translate(0," + -25 + ")");
 
-      this.playButton.on("click", function () {
-        var button = d3.select(this);
-        if (button.text() === "Pause") {
-          me.moving = false;
-          clearInterval(me.timer);
-          // timer = 0;
-          button.text("Play");
-        } else {
-          me.moving = true;
-          me.timer = setInterval(me.step, 100);
-          button.text("Pause");
-        }
-        console.log("Slider moving: " + this.moving);
-      });
+    },
+    playButton () {
+      var me = this
+      if (this.buttonText === "Pause") {
+        me.moving = false;
+        clearInterval(me.timer);
+        // timer = 0;
+        this.buttonText = 'Play';
+      } else {
+        me.moving = true;
+        me.timer = setInterval(me.step, 100);
+        this.buttonText = 'Pause';
+      }
+      console.log("Slider moving: " + this.moving);
     },
     step () {
       var me = this
@@ -295,9 +295,9 @@
     /*left: 110px;*/
     background: #f08080;
     padding-right: 26px;
-    border-radius: 4px;
+    border-radius: 3px;
     margin-left: 20px;
-    margin-top: 2px;
+    /*margin-top: 2px;*/
     border: none;
     color: white;
     /*margin: 0;*/
