@@ -11,7 +11,7 @@
       <line_chart :covidcurve="covidCurve" :xscale="x" :width="width"></line_chart>
     </div>
     <div v-if="geojson && width">
-      <states_map :geojson="geojson"></states_map>
+      <states_map :geojson="geojson" :width="width"></states_map>
     </div>
   </div>
 </template>
@@ -116,16 +116,21 @@
     this.parseDate2 = d3.timeParse("%Y-%m-%d");
 
 
-        this.endDate = new Date("2020-05-08");
+      this.endDate = new Date("2020-05-08");
 
     this.currentDay = "2020-01-21"
     this.startDate = this.parseDate2(this.currentDay)
 
-    this.margin = { top: 50, right: 50, bottom: 0, left: 75 };
-    this.width = 1100 - this.margin.left - this.margin.right;
+
+    if (screen.width > 800) {
+      this.margin = { top: 50, right: 50, bottom: 0, left: 75 };
+      this.width = 1100 - this.margin.left - this.margin.right;
+    } else {
+      this.margin = { top: 50, right: 25, bottom: 0, left: 50 };
+      this.width = 600 - this.margin.left - this.margin.right
+    }
     this.height = 250 - this.margin.top - this.margin.bottom;
-    var timeFormat = d3.timeFormat("%Y-%m-%d");
-    console.log(timeFormat(me.startDate))
+    // var timeFormat = d3.timeFormat("%Y-%m-%d");
     this.todayData = this.covidData.filter((d) => d.date === me.currentDay);
 
     this.svg = d3
