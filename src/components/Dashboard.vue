@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="title" v-if="formattedDate">
-      <span>COVID-19 analysis, {{ formattedDate.start }} to {{ formattedDate.end }}</span>
+      <span>COVID-19 analysis</span>
       <span><button id="play-button" v-on:click="playButton">{{ buttonText }}</button></span>
     </div>
     <div id="vis">
@@ -294,17 +294,12 @@
     margin-top: 30px;
   }
   #play-button {
-    /*position: absolute;*/
-    /*top: 110px;*/
-    /*left: 110px;*/
     background: #f08080;
     padding-right: 26px;
     border-radius: 3px;
     margin-left: 20px;
-    /*margin-top: 2px;*/
     border: none;
     color: white;
-    /*margin: 0;*/
     padding: 0 12px;
     width: 60px;
     cursor: pointer;
