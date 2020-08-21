@@ -24,7 +24,7 @@
   import LineChart from './LineChart'
 
   export default {
-  name: 'HelloWorld',
+  name: 'Dashboard',
   components: {
     states_map: StatesMap,
     line_chart: LineChart
