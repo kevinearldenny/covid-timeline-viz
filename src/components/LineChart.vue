@@ -29,7 +29,13 @@
     mounted: function () {
       var me = this
 
-      this.margin = { top: 10, right: 180, bottom: 10, left: 152 };
+      if (screen.width > 800) {
+        this.margin = { top: 10, right: 180, bottom: 10, left: 152 };
+      } else {
+        this.margin = { top: 10, right: 180, bottom: 10, left: 110 };
+
+      }
+
       // this.width = 1300 - this.margin.left - this.margin.right;
       this.height = 150 - this.margin.top - this.margin.bottom;
 
