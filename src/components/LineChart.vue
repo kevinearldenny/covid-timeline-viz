@@ -1,6 +1,6 @@
 <template>
     <div id="line-box">
-        <div class="mini-title">New cases per day</div>
+        <div class="mini-title">New cases per day<span v-if="currentstate"> in {{ currentstate }}</span></div>
     </div>
 </template>
 
@@ -9,7 +9,7 @@
 
   export default {
     name: 'LineChart',
-    props: ['covidcurve', 'xscale', 'width'],
+    props: ['covidcurve', 'xscale', 'width', 'currentstate'],
     components: {
 
     },

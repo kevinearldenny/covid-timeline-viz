@@ -11,10 +11,10 @@
 
     </div>
     <div v-if="x && width">
-      <line_chart :covidcurve="covidCurve" :xscale="x" :width="width"></line_chart>
+      <line_chart :covidcurve="covidCurve" :xscale="x" :width="width" :currentstate="currentState"></line_chart>
     </div>
     <div v-if="geojson && width">
-      <states_map :geojson="geojson" :width="width"></states_map>
+      <states_map :geojson="geojson" :width="width" :currentday="currentDay" :currentstate="currentState" v-on:stateselect="selectState"></states_map>
     </div>
   </div>
 </template>
@@ -267,6 +267,9 @@
       this.handle.attr("cx", me.x(h));
       this.label.attr("x", me.x(h)).text(me.formatDate(h));
       this.todayData = this.covidData.filter((d) => d.date === timeFormat(h));
+    },
+    selectState (d) {
+      this.currentState = d;
     }
 
   }
@@ -287,7 +290,7 @@
     }
   }
   #vis {
-    margin-top: 60px;
+    margin-top: 30px;
   }
   #play-button {
     /*position: absolute;*/
@@ -350,10 +353,12 @@
     position: absolute;
     text-align: center;
     width: 80px;
-    height: 14px;
+    height: 60px;
     padding: 2px;
     font: 12px sans-serif;
-    background: #fff;
+    background-color: #b6cdc2;
+    color: #848484;
+    border-radius: 5px;
     border: 0px;
     pointer-events: none;
   }

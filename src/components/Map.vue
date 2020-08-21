@@ -9,7 +9,7 @@
 
   export default {
     name: 'GeoMap',
-    props: ['geojson', 'width'],
+    props: ['geojson', 'width', 'currentday', 'currentstate'],
     components: {
 
     },
@@ -23,6 +23,9 @@
     },
     watch: {
         geojson () {
+          this.updateMap();
+        },
+        currentstate() {
           this.updateMap();
         }
     },
@@ -80,6 +83,44 @@
                   return "#F8F8F8";
                 }
               })
+              .style("opacity", function (d) {
+                if (!me.currentstate) {
+                  return 1
+                } else {
+                  if (d.properties.name === me.currentstate) {
+                    return 1
+                  } else {
+                    return 0.2
+                  }
+                }
+              })
+              .on("mouseover", function(d) {
+                me.tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                me.tooltip.html(d.properties.name + "<br>" + d.properties.cases + " cases on " + me.currentday)
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+
+                me.tooltip.on("click", function () {
+                  me.selectState(d.properties.name)
+                })
+              })
+              .on("mouseout", function() {
+                me.tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+              })
+              .on("click", function (d) {
+                console.log(d)
+                if (me.currentstate != d.properties.name) {
+                  console.log("selecting" + d.properties.name)
+                  me.selectState(d.properties.name)
+                } else {
+                  console.log("clearing")
+                  me.selectState(null)
+                }
+              });
         },
         updateMap () {
           this.svg.selectAll("path").remove();
@@ -125,6 +166,17 @@
               .attr("height", size)
               .style("fill", function (d) {
                 return me.color(d);
+              })
+              .style("opacity", function (d) {
+                if (!me.currentstate) {
+                  return 1
+                } else {
+                  if (d.properties.name === me.currentstate) {
+                    return 1
+                  } else {
+                    return 0.2
+                  }
+                }
               });
 
           // Add legend labels
@@ -151,8 +203,9 @@
               .style("alignment-baseline", "middle");
 
         },
-        selectState () {
-
+        selectState (d) {
+          console.log(d)
+            this.$emit('stateselect', d)
         }
     }
   }
