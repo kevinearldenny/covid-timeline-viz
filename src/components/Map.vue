@@ -32,7 +32,14 @@
     mounted: function () {
       var me = this
 
-      this.margin = { top: 130, right: 250, bottom: 0, left: 25 };
+      if (screen.width > 800) {
+        this.margin = { top: 130, right: 250, bottom: 0, left: 25 };
+      } else {
+        this.margin = { top: 130, right: 250, bottom: 0, left: 50 };
+
+      }
+
+
       // this.width = 1100 - this.margin.left - this.margin.right;
 
       this.height = 700 - this.margin.top - this.margin.bottom;
