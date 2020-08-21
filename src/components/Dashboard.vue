@@ -7,11 +7,12 @@
     <div id="vis">
 
     </div>
-    <div v-if="x">
-
+    <div v-if="x && width">
       <line_chart :covidcurve="covidCurve" :xscale="x" :width="width"></line_chart>
     </div>
-    <states_map :geojson="geojson"></states_map>
+    <div v-if="geojson && width">
+      <states_map :geojson="geojson"></states_map>
+    </div>
   </div>
 </template>
 
@@ -114,17 +115,18 @@
     this.formatDate = d3.timeFormat("%b %d %Y");
     this.parseDate2 = d3.timeParse("%Y-%m-%d");
 
-    this.startDate = new Date("2020-01-21"),
+
         this.endDate = new Date("2020-05-08");
 
     this.currentDay = "2020-01-21"
+    this.startDate = this.parseDate2(this.currentDay)
 
     this.margin = { top: 50, right: 50, bottom: 0, left: 75 };
     this.width = 1100 - this.margin.left - this.margin.right;
     this.height = 250 - this.margin.top - this.margin.bottom;
     var timeFormat = d3.timeFormat("%Y-%m-%d");
     console.log(timeFormat(me.startDate))
-    this.todayData = this.covidData.filter((d) => d.date === "2020-01-20");
+    this.todayData = this.covidData.filter((d) => d.date === me.currentDay);
 
     this.svg = d3
         .select("#vis")
@@ -256,9 +258,13 @@
     font-size: 12px;
     color: #696969;
   }
-  #app {
-    margin-left: 200px;
+  @media (min-width: 800px) {
+    /* CSS that should be displayed if width is equal to or less than 800px goes here */
+    #app {
+      margin-left: 200px;
+    }
   }
+
   #play-button {
     /*position: absolute;*/
     /*top: 110px;*/

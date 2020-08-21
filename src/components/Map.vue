@@ -30,7 +30,7 @@
       var me = this
 
       this.margin = { top: 125, right: 50, bottom: 0, left: 25 };
-      this.width = 1300 - this.margin.left - this.margin.right;
+      this.width = 1100 - this.margin.left - this.margin.right;
       this.height = 700 - this.margin.top - this.margin.bottom;
 
 
