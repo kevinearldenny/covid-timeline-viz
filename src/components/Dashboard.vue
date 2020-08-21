@@ -1,10 +1,13 @@
 <template>
   <div id="app">
-    <div class="title">
-      <span>COVID-19 analysis</span>
+    <div class="title" v-if="formattedDate">
+      <span>COVID-19 analysis, {{ formattedDate.start }} to {{ formattedDate.end }}</span>
       <span><button id="play-button">Play</button></span>
     </div>
     <div id="vis">
+      <div class="mini-title">
+        Timeline (drag to change map + curve)
+      </div>
 
     </div>
     <div v-if="x && width">
@@ -36,7 +39,9 @@
       todayData: null,
       currentState: null,
       currentDay: null,
-      x: null
+      x: null,
+      startDate: null,
+      endDate: null
     }
   },
   computed: {
@@ -70,6 +75,18 @@
           d.casesPerCapita = (d.cases / d.population) * 100000;
           return d
         })
+      } else {
+        return null
+      }
+    },
+    formattedDate () {
+      var formatDate = d3.timeFormat("%m/%d/%Y")
+      if (this.startDate && this.endDate) {
+
+        return {
+          start: formatDate(this.startDate),
+          end: formatDate(this.endDate)
+        }
       } else {
         return null
       }
@@ -269,15 +286,18 @@
       margin-left: 200px;
     }
   }
-
+  #vis {
+    margin-top: 60px;
+  }
   #play-button {
     /*position: absolute;*/
     /*top: 110px;*/
     /*left: 110px;*/
     background: #f08080;
     padding-right: 26px;
-    border-radius: 3px;
+    border-radius: 4px;
     margin-left: 20px;
+    margin-top: 2px;
     border: none;
     color: white;
     /*margin: 0;*/
@@ -285,7 +305,7 @@
     width: 60px;
     cursor: pointer;
     height: 30px;
-    vertical-align: center;
+    vertical-align: top;
   }
 
   #play-button:hover {
